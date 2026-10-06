@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+.env
+.env.*
+!.env.example
+CLAUDE.local.md
+.claude/settings.local.json
+Thumbs.db
+.DS_Store
