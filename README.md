@@ -22,10 +22,10 @@ TODO.md              cross-cutting tasks
 LICENSE, .gitignore
 setup.ps1            setup check
 .claude/
-  settings.json      registers the project guard hook
+  settings.json      registers the project guard and STE hooks
   agents/            worker, scout, reviewer
   skills/tune/       the /tune skill
-  hooks/             project_guard.py + its tests
+  hooks/             project_guard.py + its tests, ste.md (STE writing mode)
 system/
   projects.py        routing index: one line per project
   templates/         CLAUDE.md + STATUS.md for new projects
@@ -65,6 +65,12 @@ session. To allow a crossing permanently, add a line to the project's `CLAUDE.md
 The Bash/PowerShell check scans the command for project paths, so a command that reaches
 another project without naming it (for example `grep -r x .` at the root) is not caught.
 
+**STE mode.** A `SessionStart` hook loads `.claude/hooks/ste.md`, which makes Claude write
+its replies in ASD-STE100 Simplified Technical English (the style of aircraft maintenance
+manuals): short sentences, one meaning per word, active voice, no idioms, no contractions.
+Say "stop STE" to turn it off for the session and "STE on" to turn it back on. Code,
+commands, commit messages, and file contents are not affected.
+
 **Delegation.** The orchestrator picks the lightest path: do trivial work directly, brief
 one `worker` for a clear spec, use a script or `scout` for bulk mechanical work, fan out
 `worker`s for research, and add a `reviewer` after non-trivial builds. Briefs follow a
@@ -98,6 +104,8 @@ pair. Run `python system/projects.py` to confirm it appears in the index.
 - Edit `CLAUDE.md` to change global behavior; keep it short.
 - Edit `.claude/agents/*.md` to change an agent's rules, model, or return format.
 - Add skills under `.claude/skills/<name>/SKILL.md`.
+- Edit `.claude/hooks/ste.md` to change the writing rules, or delete the `SessionStart` entry in
+  `.claude/settings.json` to drop STE mode entirely.
 - Put personal or machine-specific notes in `CLAUDE.local.md` (not committed).
 - Delete `build/example-app/` when you no longer need it.
 

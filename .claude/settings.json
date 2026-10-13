@@ -1,5 +1,11 @@
 {
   "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear|compact",
+        "hooks": [{ "type": "command", "command": "cat \"$CLAUDE_PROJECT_DIR/.claude/hooks/ste.md\"", "timeout": 5 }]
+      }
+    ],
     "PreToolUse": [
       {
         "matcher": "Read|Edit|Write|MultiEdit|NotebookEdit|Grep|Glob|Bash|PowerShell",
